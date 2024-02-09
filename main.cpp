@@ -100,6 +100,53 @@ class Tree {
         Node* get_root() {
             return head ;
         }
+        //recursive methode(only works for the root data for some reason)
+        bool recherche(Node* root,int x){
+            Node* current = head ;
+            if(!current){return false;}
+            if(current->data == x){
+                return true;
+            }
+            if(x>current->data){
+                    recherche(current->right_node,x);
+                }
+            if(x<current->data){
+                    recherche(current->left_node,x);
+                }
+            return false ;
+        }
+        //methode withe a FIFO queue using breadth-first search algorithm
+        bool recherche2(Node* root, int x) {
+        if (!root) {
+          cout << "the data doesn't exist cuz the tree is empty" << endl;
+          return false;
+        }
+
+        queue<Node*> q;
+        q.push(root);
+
+        while (!q.empty()) {
+          Node* current = q.front();
+          q.pop();
+
+          if (current->data == x) {
+              cout << "the data exists in the tree" << endl;
+              return true;
+          }
+
+          if (current->left_node) {
+              q.push(current->left_node);
+          }
+
+          if (current->right_node) {
+             q.push(current->right_node);
+          }
+          }
+
+    cout << "the data doesn't exist in the tree" << endl;
+    return false;
+}
+
 
 };
 
@@ -113,7 +160,14 @@ int main()
     t.insert_debut(5);
     t.insert_debut(1);
     t.insert_debut(6);
-
     t.show(t.get_root());
+    int a ;
+    cout << "put the a value and see if it's existing in your tree or not" << endl;
+    cin >> a ;
+    if(t.recherche(t.get_root(),a)){
+        cout << "the value " << a << " does exist" << endl;
+    }else{
+        cout <<"the value " << a <<" doesn't exist" << endl;
+    }
     return 0;
 }
