@@ -167,6 +167,40 @@ class Tree {
                     }
 
                 }
+                int maximum_depth(Node* current){
+                    int n =1;
+                    if(!current){
+                        return 0;
+                    }
+                    if(current->left_node && current->right_node){
+                        n+=1 ;
+                        maximum_depth(current->left_node);
+                        maximum_depth(current->right_node);
+                    }
+                    if(current->left_node){
+                        n+=1;
+                        maximum_depth(current->left_node);
+                    }
+                    if(current->right_node){
+                        n+=1;
+                        maximum_depth(current->right_node);
+                    }
+                    return n;
+                }
+                int diametre_tree(Node* current,int& res){
+                    if(!current){
+                        return 0;
+                    }
+                    int r =diametre_tree(current->right_node,res);
+                    int l =diametre_tree(current->left_node,res) ;
+                    res = max(res,r+l);
+                    return 1+max(r,l) ;
+                }
+                int diametre_tree_full(Node* current){
+                    int res = 0 ;
+                    diametre_tree(current , res) ;
+                    return res ;
+                }
 
 
 };
@@ -184,7 +218,11 @@ int main()
     t.show(t.get_root());
     t.invert_tree(t.get_root());
     t.show(t.get_root());
-    int a ;
+    //int x = t.maximum_depth(t.get_root()) ;
+    int d = t.diametre_tree_full(t.get_root());
+    //cout << x << endl;
+    cout << d << endl;
+    /*int a ;
     cout << "put the a value and see if it's existing in your tree or not" << endl;
     cin >> a ;
     if(t.recherche(t.get_root(),a)){
@@ -192,5 +230,5 @@ int main()
     }else{
         cout <<"the value " << a <<" doesn't exist" << endl;
     }
-    return 0;
+    return 0;*/
 }
