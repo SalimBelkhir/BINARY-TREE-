@@ -100,9 +100,8 @@ class Tree {
         Node* get_root() {
             return head ;
         }
-        //recursive methode(only works for the root data for some reason)
-        bool recherche(Node* root,int x){
-            Node* current = head ;
+        //recursive methode
+        bool recherche(Node* current,int x){
             if(!current){return false;}
             if(current->data == x){
                 return true;
@@ -113,7 +112,7 @@ class Tree {
             if(x<current->data){
                     recherche(current->left_node,x);
                 }
-            return false ;
+            return true ;
         }
         //methode withe a FIFO queue using breadth-first search algorithm
         bool recherche2(Node* root, int x) {
@@ -143,9 +142,31 @@ class Tree {
           }
           }
 
-    cout << "the data doesn't exist in the tree" << endl;
-    return false;
-}
+         cout << "the data doesn't exist in the tree" << endl;
+         return false;
+          }
+
+          void invert_tree(Node* current)
+          {
+              if(!current){
+                cout << "if this message printed tow times -> the code is working" << endl;
+                return ;
+              }
+              Node* x = current->left_node ;
+              current->left_node= current->right_node ;
+              current->right_node = x ;
+                    if(current->left_node && current->right_node){
+                        invert_tree(current->left_node);
+                        invert_tree(current->right_node);
+                    }else if(current->left_node){
+                        current = current->left_node ;
+                        invert_tree(current);
+                    }else{
+                        current = current->right_node;
+                        invert_tree(current);
+                    }
+
+                }
 
 
 };
@@ -160,6 +181,8 @@ int main()
     t.insert_debut(5);
     t.insert_debut(1);
     t.insert_debut(6);
+    t.show(t.get_root());
+    t.invert_tree(t.get_root());
     t.show(t.get_root());
     int a ;
     cout << "put the a value and see if it's existing in your tree or not" << endl;
